@@ -1,20 +1,20 @@
-name: "deploy microservice"
+name: "deploy website"
 run-name: ${{ github.actor }} is learning GitHub Actions
 on:
   push:
   workflow_dispatch:
 
 jobs:
-  Explore-Github-Actions:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Event name
-        run: echo "the job was automatically triggered by a ${{ github.event_name }} event."
-
-      - name: checkout the repository code
-        uses: actions/checkout@v4
-
-      - name: list files in the repository
-        run: |
-          ls ${{ github.workspace }}
-      - run: echo "this job status is ${{ job.status }}."
+    create-folder:
+        name: Create folder on Server
+        runs-on: ubuntu-latest
+        steps:
+          - name: Creer un repertoire sur le server
+            uses: appleboy/ssh-action@v1
+            with:
+              host: ${{ secrets.SERVER_HOST }}
+              username: ${{ secrets.SERVER_USERNAME }}
+              key: ${{ secrets.SERVER_SSH_PRIVATE_KEY}}
+              port: ${{ secrets.SERVER_PORT }}
+              script: |
+                mkdir -p /opt/mes-naissances/website
